@@ -22,7 +22,7 @@ TODO
 6. create normal header
 
 new fixes
-1. fix footer and header. footer should be anchored to bottom.
+1. fix footer and header. footer should be anchored to bottom.+
 2. fix inputs +
 3. show verbs add hotkeys +
 4. change modal in irregular verbs test
