@@ -1,0 +1,115 @@
+/* Main container for the card */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    font-family: "Excalifont", cursive, sans-serif;
+    position: relative;
+    padding: 2rem;
+}
+
+/* Title styling */
+.card-title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Container for input fields */
+.card-inputs {
+    display: flex;
+    flex-direction: column; /* Ensure inputs stack vertically */
+    gap: 1.5rem;  /* Adds space between inputs */
+    align-items: center; /* Center align all input fields */
+    width: 100%;
+    max-width: 500px; /* Set a max width to avoid input fields becoming too large */
+}
+
+/* Styling for label and input fields */
+.card-inputs label {
+    font-size: 1.5rem;
+    width: 100%;  /* Make label and input take full width */
+    text-align: left; /* Left align the label text */
+    margin-bottom: 0.5rem; /* Adds some space below each label */
+    padding-left: 10%; /* Optional: adds padding for a more consistent alignment */
+}
+
+.card-inputs input {
+    display: block; /* Make inputs behave like block elements */
+    width: 80%;  /* Set the input width to 80% of the container */
+    font-size: 1.5rem; /* Increase font size for better readability */
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+/* Navigation buttons for left and right */
+.card-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    color: blue;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.card-nav-btn.left {
+    left: 2rem;
+}
+
+.card-nav-btn.right {
+    right: 2rem;
+}
+
+.card-nav-btn:hover {
+    color: darkblue;
+}
+
+/* Finish button styling */
+.card-finish-btn {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 0.5rem 2rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 3rem;
+}
+
+.card-finish-btn:hover {
+    background-color: darkblue;
+}
+
+/* Back Button Styling */
+.card-back-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: blue;
+    text-decoration: none;
+}
+
+.card-back-btn:hover {
+    color: darkblue;
+}
+
+.timer {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: black;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 100px;
+    font-family: "Excalifont", sans-serif;
+}

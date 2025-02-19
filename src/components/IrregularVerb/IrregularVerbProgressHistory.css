@@ -1,0 +1,66 @@
+/* Flex container for header */
+.header-container {
+    position: relative; /* So we can absolutely position the back button */
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Center the title horizontally */
+    align-items: center;
+}
+
+/* Back button styling */
+.card-back-btn {
+    position: absolute; /* Keep it on the left */
+    left: 20px;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    background-color: transparent; /* Make the background invisible */
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: color 0.3s ease;
+    line-height: 1;
+    border: none; /* Remove any default border */
+}
+
+.card-back-btn:hover {
+    color: #666; /* Slightly darker text on hover */
+}
+
+/* Centered title */
+.progress-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+/* Table styling */
+.ant-table-wrapper {
+    width: 100%;
+    flex-grow: 1;
+    overflow: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Background and text color for success rows */
+.row-success {
+    background-color: #d8f7ba !important;
+    color: #5a900d !important; /* Green text */
+}
+
+/* Background and text color for failed rows */
+.row-failed {
+    background-color: #ffdede !important;
+    color: #e65f5f !important; /* Red text */
+}
+
+/* Hover effects for rows */
+.ant-table-tbody > tr.row-success:hover td {
+    background-color: #c6efa4 !important;
+}
+
+.ant-table-tbody > tr.row-failed:hover td {
+    background-color: #ffcccc !important;
+}

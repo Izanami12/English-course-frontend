@@ -1,0 +1,86 @@
+/* Container for the card - Full page width */
+.card-container {
+    font-family: 'Excalifont', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%; /* Full width of the page */
+    max-width: none; /* No max width */
+    height: 90vh; /* Adjust height to fill most of the screen */
+    margin: 0 auto; /* Center the card */
+    text-align: center;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    flex-direction: column; /* Stack items vertically */
+  }
+  
+  /* Back button (arrow) in top-left corner */
+  .card-back-btn {
+    position: absolute;
+    top: 10px; /* 10px from the top */
+    left: 10px; /* 10px from the left */
+    cursor: pointer;
+    font-size: 64px; /* Bigger back arrow */
+    color: #007BFF;
+  }
+  
+  /* Main title (verb infinitive) */
+  .card-title {
+    font-size: 90px; /* 1.5 times bigger font size */
+    margin-bottom: 10px; /* Reduced space after title */
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Translation text */
+  .card-translation {
+    font-size: 28px; /* 1.5 times bigger font size */
+    margin-bottom: 20px; /* Reduced space to bring it closer to infinitive */
+    color: #666;
+  }
+  
+  /* List of verb forms (Past Simple & Past Participle) */
+  .card-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+    font-size: 42px; /* 1.5 times bigger font size */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items vertically */
+  }
+  
+  .card-list li {
+    margin-bottom: 25px; /* Increased space between verb forms */
+  }
+  
+  /* Navigation buttons (arrows) positioned close to the center */
+  .card-nav-btn {
+    position: absolute;
+    top: 50%; /* Vertically center the arrows */
+    transform: translateY(-50%);
+    font-size: 96px; /* Bigger arrows */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007BFF;
+  }
+  
+  .card-nav-btn:disabled {
+    color: #ccc;
+    cursor: default;
+  }
+  
+  /* Position arrows closer to the center */
+  .card-nav-btn.left {
+    left: 12%; /* Adjusted position for previous button */
+  }
+  
+  .card-nav-btn.right {
+    right: 12%; /* Adjusted position for next button */
+  }
+  

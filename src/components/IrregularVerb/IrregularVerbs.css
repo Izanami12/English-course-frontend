@@ -1,0 +1,102 @@
+@font-face {
+  font-family: 'Excalifont';
+  src: url('../../assets/fonts/Excalifont-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Remove max-width restriction from the table wrapper */
+.ant-table-wrapper {
+  max-width: 100% !important;  /* Override Ant Design's 800px max-width */
+  width: 100% !important;      /* Ensure it takes the full width */
+}
+
+/* Increase font size and ensure full-width for the table */
+.ant-table {
+  font-family: 'Excalifont', sans-serif;
+  font-size: 1.5em;           /* Increase font size by 1.5x */
+  width: 100% !important;     /* Ensure table fills full width */
+}
+
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  font-family: 'Excalifont', sans-serif;
+  font-size: 1.5em;           /* Increase font size for table headers and cells */
+}
+
+/* Ensure container stretches to full screen */
+.irregular-verbs-container {
+  padding: 20px;
+  font-family: 'Excalifont', sans-serif;
+  width: 100vw;              /* Full viewport width */
+  height: 100vh;             /* Full viewport height */
+  box-sizing: border-box;    /* Include padding in width/height */
+}
+
+/* Adjust button styles */
+.irregular-verbs-container > .ant-btn {
+  border-radius: 4px;
+  font-family: 'Excalifont', sans-serif;
+  font-size: 1.5em;          /* Increase button font size */
+}
+
+/* Adjust input styles to match font size */
+.irregular-verbs-container input {
+  font-family: 'Excalifont', sans-serif;
+  font-size: 1.5em;
+  width: auto;
+}
+
+/* Ensure table scrolls if too wide */
+.ant-table-container {
+  overflow-x: auto;
+}
+
+/* Header section alignment */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* Control panel for in-progress message and input/button */
+.control-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Space between the message and input/button */
+}
+
+/* Style for the in-progress message */
+.in-progress-message {
+  color: red;
+  margin: 0;
+  font-size: 1.5em; /* Match table font size */
+  font-family: 'Excalifont', sans-serif;
+}
+
+/* Shared styles for input and button to ensure consistent size */
+.irregular-verbs-container .input-button-group input,
+.irregular-verbs-container .input-button-group .ant-btn {
+  height: 48px;               /* Set consistent height */
+  font-size: 1.5em;           /* Increase font size */
+  border-radius: 4px;         /* Add rounded corners for consistency */
+  box-sizing: border-box;     /* Include padding and border in height calculation */
+}
+
+/* Set consistent padding between input and button */
+.irregular-verbs-container .input-button-group {
+  display: flex;
+  gap: 8px;                  /* Space between input and button */
+  align-items: center;       /* Vertically align input and button */
+}
+
+/* Fixed width for input */
+.irregular-verbs-container .input-button-group input {
+  width: 150px;              /* Fixed input width */
+}
+
+/* Fixed width for button */
+.irregular-verbs-container .input-button-group .ant-btn {
+  width: 200px;              /* Set a consistent width for the button */
+}
