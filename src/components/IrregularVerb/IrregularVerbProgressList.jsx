@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Input, Spin } from 'antd';
 import 'antd/dist/reset.css';
-import './IrregularVerbs.css';
+import './IrregularVerbProgressList.css';
 import IrregularVerbService from '../service/IrregularVerbService';
 import { useNavigate } from 'react-router-dom';
 import VerbModal from './VerbModal';
 
-const IrregularVerbs = () => {
+const IrregularVerbProgressList = () => {
   const [questionCount, setQuestionCount] = useState(10);
   const [progress, setProgress] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -173,4 +173,4 @@ const IrregularVerbs = () => {
   );
 };
 
-export default IrregularVerbs;
+export default IrregularVerbProgressList;

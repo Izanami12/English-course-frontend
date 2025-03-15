@@ -1,11 +1,20 @@
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full screen height */
-    width: 100vw;
-    background-image: url("src/components/images/Wheelchair_work_0.2.gif");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+/* Fixed Toggle Button Styling */
+.fixed-toggle-button {
+  position: fixed; /* Fix the button to the screen */
+  bottom: 20px; /* Distance from the bottom */
+  right: 20px; /* Distance from the right */
+  padding: 10px 20px;
+  color: #2196f3; /* Use a contrasting color for the text */
+  border: 2px solid #2196f3; /* Add a border for visibility */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 1000; /* Ensure the button is above other content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.fixed-toggle-button:hover {
+  background-color: #2196f3 !important; /* Change background on hover */
+  color: white; /* Change text color on hover */
+}

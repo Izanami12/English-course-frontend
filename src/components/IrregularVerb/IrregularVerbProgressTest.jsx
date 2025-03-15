@@ -24,9 +24,9 @@ const IrregularVerbProgressTest = () => {
 
     const navigate = useNavigate();
 
-    const infinitiveRef = useRef("");
-    const pastSimpleRef = useRef("");
-    const pastParticipleRef = useRef("");
+    const infinitiveRef = useRef(null);
+    const pastSimpleRef = useRef(null);
+    const pastParticipleRef = useRef(null);
 
     // ✅ Notification helper
     const openNotification = (type, message, description) => {
@@ -167,21 +167,10 @@ const IrregularVerbProgressTest = () => {
         navigate('/irregular-verbs-progress'); // Navigate to the desired page
     };
 
+    // ✅ Focus on the infinitive input when the current index changes
     useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'Enter') {
-                handleNext();
-            } else if (e.key === 'ArrowLeft') {
-                handlePrev();
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [currentIndex, verbList]);
+        focusInfinitiveInput();
+    }, [currentIndex]);
 
     const focusInfinitiveInput = () => {
         if (infinitiveRef.current) {
@@ -192,14 +181,48 @@ const IrregularVerbProgressTest = () => {
             }, 0);
         }
     };
-    
-    useEffect(() => {
-        focusInfinitiveInput();
-    }, [currentIndex]);
-    
-    
-    
 
+    // ✅ Focus on the end of the text in the input field
+    const focusInputAtEnd = (inputRef) => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+            setTimeout(() => {
+                const length = inputRef.current.value.length;
+                inputRef.current.setSelectionRange(length, length);
+            }, 0);
+        }
+    };
+
+    // ✅ Handle keyboard shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Enter') {
+                handleNext();
+            } else if (e.key === 'ArrowLeft') {
+                handlePrev();
+            } else if (e.key === 'ArrowDown') {
+                // Move to the next input field and focus at the end of the text
+                if (document.activeElement === infinitiveRef.current) {
+                    focusInputAtEnd(pastSimpleRef);
+                } else if (document.activeElement === pastSimpleRef.current) {
+                    focusInputAtEnd(pastParticipleRef);
+                }
+            } else if (e.key === 'ArrowUp') {
+                // Move to the previous input field and focus at the end of the text
+                if (document.activeElement === pastParticipleRef.current) {
+                    focusInputAtEnd(pastSimpleRef);
+                } else if (document.activeElement === pastSimpleRef.current) {
+                    focusInputAtEnd(infinitiveRef);
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [currentIndex, verbList]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;

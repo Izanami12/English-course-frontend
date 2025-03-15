@@ -1,0 +1,37 @@
+/* TagsCloud.css */
+
+/* Container for the tags cloud */
+.tags-cloud-container {
+    background: #1b263b; /* Set the background color to match your design */
+    position: relative; /* Use relative positioning */
+    width: 100%; /* Ensure the container takes up the full width */
+    height: 100vh; /* Ensure the container takes up the full height */
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Tags cloud container */
+.tags-cloud {
+    position: relative;
+    top: calc(50% - 30vmin);
+    left: calc(50% - 30vmin);
+    height: 60vmin;
+    width: 60vmin;
+    list-style: none;
+    opacity: 1; /* Ensure the container is visible */
+}
+
+/* Individual tags */
+.tags-cloud > .tag {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 5vmin;
+    font-weight: bold;
+    color: #778da9; /* Ensure the text color is visible */
+    transition: transform 0.5s linear, opacity 0.5s linear;
+}
+
+.tags-cloud > .tag > .wrap {
+    display: inline-block;
+    transform: translateX(-50%) translateY(-50%);
+}

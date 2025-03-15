@@ -1,0 +1,30 @@
+/* Apply custom font */
+@font-face {
+    font-family: 'Excalifont'; /* Replace with your custom font name */
+    font-weight: normal;
+    font-style: normal;
+}
+
+.verb-card-container {
+    font-family: 'Excalifont', sans-serif; /* Use the custom font */
+}
+
+.verb-card {
+    font-size: 2rem; /* Increase font size by 2x */
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.verb-title {
+    font-size: 2.5rem; /* Increase title font size */
+    font-weight: bold;
+    color: #333;
+}
+
+.verb-text {
+    font-size: 2rem; /* Increase text font size */
+    line-height: 1.6;
+    margin: 10px 0;
+}

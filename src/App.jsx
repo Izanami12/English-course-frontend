@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react';
 import keycloak from './keycloak';
 import Navbar from './components/Navbar/Navbar';
 import { Route, Routes } from "react-router-dom";
-import IrregularVerbsList from './components/IrregularVerb/IrregularVerbsList';
 import Home from './components/home/Home';
 import Footer from './components/Navbar/Footer';
-import IrregularVerbs from './components/IrregularVerb/IrregularVerbs';
+import IrregularVerbList from './components/IrregularVerb/IrregularVerbList';
 import IrregularVerbProgressCard from './components/IrregularVerb/IrregularVerbProgressCard';
 import IrregularVerbProgressTest from './components/IrregularVerb/IrregularVerbProgressTest';
 import IrregularVerbProgressHistory from './components/IrregularVerb/IrregularVerbProgressHistory';
 import "antd/dist/reset.css";
-import loadingGif from './components/images/Wheelchair_work_0.2.gif';
+import loadingGif from './assets/images/Wheelchair_work_0.2.gif';
+import TagsCloudComponent from './components/home/TagsCloudComponent';
+import IrregularVerbProgressList from './components/IrregularVerb/IrregularVerbProgressList';
+import IrregularVerbTest from './components/IrregularVerb/IrregularVerbTest';
 
 /* 
 TODO
@@ -73,18 +75,23 @@ const App = () => {
   }
 
   return (
-    <div className="App">
+    <div className="App flex flex-col min-h-screen">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/irregular-verbs" element={<IrregularVerbsList />} />
-        <Route path="/irregular-verbs-progress" element={<IrregularVerbs />} />
-        <Route path="/irregular-verbs-progress-card" element={<IrregularVerbProgressCard />} />
-        <Route path="/irregular-verbs-progress-test" element={<IrregularVerbProgressTest />} />
-        <Route path="/irregular-verbs-progress-history" element={<IrregularVerbProgressHistory />} />
-      </Routes>
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home2" element={<TagsCloudComponent />} />
+          <Route path="/irregular-verbs" element={<IrregularVerbList />} />
+          <Route path="/irregular-verbs-test" element={<IrregularVerbTest />} />
+          <Route path="/irregular-verbs-progress" element={<IrregularVerbProgressList />} />
+          <Route path="/irregular-verbs-progress-card" element={<IrregularVerbProgressCard />} />
+          <Route path="/irregular-verbs-progress-test" element={<IrregularVerbProgressTest />} />
+          <Route path="/irregular-verbs-progress-history" element={<IrregularVerbProgressHistory />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
+
   )
 };
 
