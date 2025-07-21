@@ -13,6 +13,10 @@ import loadingGif from './assets/images/Wheelchair_work_0.2.gif';
 import TagsCloudComponent from './components/home/TagsCloudComponent';
 import IrregularVerbProgressList from './components/IrregularVerb/IrregularVerbProgressList';
 import IrregularVerbTest from './components/IrregularVerb/IrregularVerbTest';
+import Vocabulary from './components/vocabulary/Vocabulary';
+import VocabularyLearningCard from './components/vocabulary/VocabularyLearningCard';
+import Input from './components/vocabulary/Input';
+import UserInfo from './components/user/UserInfo';
 
 /* 
 TODO
@@ -80,13 +84,16 @@ const App = () => {
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home2" element={<TagsCloudComponent />} />
           <Route path="/irregular-verbs" element={<IrregularVerbList />} />
           <Route path="/irregular-verbs-test" element={<IrregularVerbTest />} />
           <Route path="/irregular-verbs-progress" element={<IrregularVerbProgressList />} />
           <Route path="/irregular-verbs-progress-card" element={<IrregularVerbProgressCard />} />
           <Route path="/irregular-verbs-progress-test" element={<IrregularVerbProgressTest />} />
           <Route path="/irregular-verbs-progress-history" element={<IrregularVerbProgressHistory />} />
+          <Route path="/vocabulary" element={<Vocabulary />} />
+          <Route path="/vocabulary/learn" element={<VocabularyLearningCard />} />
+          <Route path="/vocabulary/input/:id" element={<Input />} />
+          <Route path="/user-info" element={<UserInfo />} />
         </Routes>
       </div>
       <Footer />

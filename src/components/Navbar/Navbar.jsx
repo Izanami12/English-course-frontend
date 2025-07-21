@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { UserOutlined } from '@ant-design/icons';
 import wheelchair from '../../assets/images/Wheelchair_work_0.2.gif';
 
 const Navbar = () => {
@@ -9,6 +10,7 @@ const Navbar = () => {
 
   const isProgressActive = location.pathname.startsWith('/irregular-verbs-progress');
   const isVerbsActive = location.pathname.startsWith('/irregular-verbs');
+  const isVocabularyActive = location.pathname.startsWith('/vocabulary');
   const isHomeActive = location.pathname === '/';
 
   const toggleMenu = () => {
@@ -45,6 +47,13 @@ const Navbar = () => {
         >
           Progress
         </Link>
+        <Link
+            to="/vocabulary"
+            onClick={closeMenu}
+            className={`px-4 py-2 rounded ${isVocabularyActive ? 'bg-blue-600 text-white' : 'text-white hover:bg-gray-800'}`}
+          >
+            Vocabulary
+          </Link>
       </div>
 
       {/* Mobile Menu Icon */}
@@ -76,8 +85,23 @@ const Navbar = () => {
           >
             Progress
           </Link>
+          <Link
+            to="/vocabulary"
+            onClick={closeMenu}
+            className={`px-4 py-2 rounded ${isVocabularyActive ? 'bg-blue-600 text-white' : 'text-white hover:bg-gray-800'}`}
+          >
+            Vocabulary
+          </Link>
         </div>
       )}
+
+      {/* User Profile Link */}
+      <div className="flex items-center gap-4">
+        <Link to="/user-info" className="text-white flex items-center hover:text-blue-400">
+          <UserOutlined style={{ fontSize: 24, marginRight: 6 }} />
+          Profile
+        </Link>
+      </div>
     </nav>
   );
 };

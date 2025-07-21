@@ -1,6 +1,6 @@
 import axiosInstance from "../../CustomAxios"; 
 
-class ContractDataService {
+class IrregularVerbService {
     getIrregularVerbList() {
         return axiosInstance.get('/irregular-verb');
     }
@@ -51,7 +51,7 @@ class ContractDataService {
     }
 
     checkAnswers(data) {
-        return axiosInstance.post('/irregular-verb/check-answer/check-test', data, {
+        return axiosInstance.post('/irregular-verb/check-test', data, {
             headers: {
               'X-Trace-Id': localStorage.getItem("traceId") || '',  // Add traceId to request headers, or set to empty string if not found
               'Content-Type': 'application/json', // Ensure Content-Type is set
@@ -60,4 +60,4 @@ class ContractDataService {
     }
 
 }
-export default new ContractDataService();
+export default new IrregularVerbService();

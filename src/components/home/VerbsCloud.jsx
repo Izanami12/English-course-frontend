@@ -13,7 +13,7 @@ const VerbsCloud = () => {
     const fetchData = async () => {
       try {
         const response = await IrregularVerbService.getIrregularVerbList();
-        const verbs = response.data.data.map((item) => item.infinitive);
+        const verbs = response.data.data.slice(0,100).map((item) => item.infinitive);
         setVerbs(verbs);
       } catch (error) {
         console.error('Error fetching verbs:', error);

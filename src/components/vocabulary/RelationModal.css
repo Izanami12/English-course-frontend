@@ -1,0 +1,41 @@
+.modal-section {
+  margin-bottom: 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.tag-select-box {
+  padding: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.dropdown-tag-panel {
+  border: 1px solid #d9d9d9;
+  padding: 8px;
+  border-radius: 4px;
+  background: white;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-tag-item {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dropdown-tag-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-tag-empty {
+  color: #999;
+  font-size: 0.875rem;
+}

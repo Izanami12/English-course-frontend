@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'Excalifont';
+  src: url('../../assets/fonts/Excalifont-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.add-input-modal * {
+  font-family: 'Excalifont', sans-serif !important;
+}
+
+.modal-content {
+  display: flex;
+  gap: 20px;
+}
+
+.main-fields {
+  flex: 2;
+}
+
+.additional-fields {
+  flex: 1;
+}
+
+.field-group {
+  margin-bottom: 16px;
+}
+
+.tag-selector {
+  position: relative;
+}
+
+.tag-dropdown {
+  position: absolute;
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tag-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tag-option:hover {
+  background-color: #f5f5f5;
+}
+
+.tag-option.part-of-speech {
+  font-weight: bold;
+  color: #1890ff;
+}
+
+.tag-option.priority {
+  font-weight: bold;
+  color: #52c41a;
+}
+
+.selected-tags {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.example-item,
+.relation-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.example-item .ant-input,
+.relation-item > span {
+  flex: 1;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}

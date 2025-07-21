@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'Excalifont';
+    src: url('../../assets/fonts/Excalifont-Regular.woff2') format('woff2');
+  }
+  
+  .component-root * {
+    font-family: 'Excalifont', sans-serif !important;
+  }
+  
+  .vocab-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+  
+  .vocab-card {
+    width: 600px;
+    min-height: 400px;
+    padding: 40px;
+    font-family: 'Excalifont', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    perspective: 1000px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vocab-card.flipped {
+    transform: rotateY(180deg);
+  }
+  
+  .vocab-card-front, .vocab-card-back {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .vocab-card-back {
+    transform: rotateY(180deg);
+  }
+  
+  .vocab-word {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .vocab-tagline {
+    font-size: 16px;
+    color: #999;
+  }
+  
+  .vocab-translation {
+    font-size: 24px;
+    margin: 12px 0;
+  }
+  
+  .vocab-example {
+    font-size: 18px;
+    margin-top: 8px;
+    color: #555;
+  }
+  
+  .vocab-buttons {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+  
+
+  .vocab-card.animating {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  
+  .vocab-card.animating .vocab-word,
+  .vocab-card.animating .vocab-tagline,
+  .vocab-card.animating .vocab-translation,
+  .vocab-card.animating .vocab-example,
+  .vocab-card.animating .vocab-buttons {
+    visibility: hidden;
+  }
+  
+  .vocab-card.animating::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    z-index: 1;
+    border-radius: 8px;
+  }

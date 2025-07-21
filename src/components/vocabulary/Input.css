@@ -1,0 +1,70 @@
+.input-page-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.input-back-btn-fixed {
+  position: fixed;
+  top: 120px; /* Set this to your navbar's height */
+  left: 32px;
+  z-index: 100;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: background 0.2s;
+}
+.input-back-btn-fixed:hover {
+  background: #f0f5ff;
+}
+
+.input-card {
+  font-size: 20px;
+}
+
+.input-tags-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.input-tag {
+  font-size: 1.1rem !important;
+  background: #e6ffe6 !important;
+  color: #389e3c !important;
+  border: 1px solid #b7eb8f !important;
+  border-radius: 8px !important;
+  padding: 2px 12px !important;
+}
+
+.input-tag-blue {
+  font-size: 1.1rem !important;
+  background: #e6f7ff !important;
+  color: #1890ff !important;
+  border: 1px solid #91d5ff !important;
+  border-radius: 8px !important;
+  padding: 2px 12px !important;
+}
+
+.input-relations-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.input-relation-btn {
+  background: #e6f7ff !important;
+  border-radius: 8px !important;
+  color: #1890ff !important;
+  border: 1px solid #91d5ff !important;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.input-relation-text {
+  color: #1890ff;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
