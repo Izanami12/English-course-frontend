@@ -15,48 +15,92 @@
 }
   
   .vocab-card {
-    width: 600px;
-    min-height: 400px;
-    padding: 40px;
+    width: 600px; /* increased default width */
+    max-width: 96vw;
+    min-height: 480px; /* increased default height */
+    padding: 0; /* padding moved into faces to avoid double-padding overflow */
     font-family: 'Excalifont', sans-serif;
     font-size: 20px;
     text-align: center;
     cursor: pointer;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.6s ease;
+    transition: transform 1.8s ease;
     perspective: 1000px;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1.5px solid rgba(0,0,0,0.12); /* stronger visible border */
+    outline: 1px solid rgba(0,0,0,0.04); /* outline to ensure edge is visible above overlays */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    overflow: visible;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .vocab-card.flipped {
     transform: rotateY(180deg);
   }
   
+  /* Answer animation: 90-degree rotation only */
+  .vocab-card.animating {
+    transform: rotateY(90deg);
+  }
+
+  .vocab-card.animating.flipped {
+    transform: rotateY(90deg); /* stay at 90deg during answer animation */
+  }
+  
   .vocab-card-front, .vocab-card-back {
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 40px;
+    inset: 0;
+    padding: 28px; /* slightly larger padding for readability */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
   }
-  
+
+  /* Make back content scrollable in a controlled area so everything is reachable */
   .vocab-card-back {
+    z-index: 1;
     transform: rotateY(180deg);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
   }
+
+  /* Header (word + translation + tags) stays visible; body scrolls if necessary */
+  .vocab-card-back .back-header {
+    flex-shrink: 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .vocab-card-back .back-header .back-word { text-align: center; margin-bottom: 8px; }
+  .vocab-card-back .back-header .back-meta { text-align: left; display:flex; flex-direction:column; gap:8px; padding-top: 8px; }
+  .vocab-card-back .back-body { overflow-y: auto; max-height: calc(100% - 160px); padding-right:8px; padding-top:12px; }
+
+  /* ensure tags wrapper consistent */
+  .vocab-card-back .tags-wrapper { display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* ensure front is on top by default and swap when flipped */
+  .vocab-card-front { z-index: 2; }
+  .vocab-card.flipped .vocab-card-front { z-index: 1; }
+  .vocab-card.flipped .vocab-card-back { z-index: 2; }
   
   .vocab-word {
-    font-size: 48px;
+    font-size: clamp(32px, 7vw, 64px);
     font-weight: bold;
-    margin-bottom: 20px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    word-break: break-word;
+    line-height: 1.05;
   }
   
   .vocab-tagline {
@@ -74,36 +118,42 @@
     margin-top: 8px;
     color: #555;
   }
+
+  .vocab-card-back ul { padding-left: 1.2em; margin: 8px 0; }
+  .vocab-card-back li { white-space: normal; margin-bottom: 6px; word-break: break-word; }
+  .vocab-card-back .vocab-translation { font-size: 20px; margin-bottom: 8px; }
+  .vocab-card-back .tags-wrapper { display: flex; gap: 8px; flex-wrap: wrap; }
+  .vocab-card-back .tags-wrapper span { margin-bottom: 6px; }
+
+  /* back side word header */
+  .vocab-card-back .back-word { font-size: clamp(18px, 3.5vw, 28px); font-weight: 700; text-align: center; }
+
+  /* make the word area comfortably centered on front */
+  .vocab-card-front .vocab-word { display: flex; align-items: center; justify-content: center; height: 100%; }
   
   .vocab-buttons {
-    margin-top: 40px;
+    margin-top: 16px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: center;
-    gap: 40px;
+    gap: 24px;
+    align-self: center; /* keep buttons centered and visible */
   }
   
 
   .vocab-card.animating {
-    opacity: 0.7;
+    opacity: 0.9;
     pointer-events: none;
   }
-  
-  .vocab-card.animating .vocab-word,
-  .vocab-card.animating .vocab-tagline,
-  .vocab-card.animating .vocab-translation,
-  .vocab-card.animating .vocab-example,
-  .vocab-card.animating .vocab-buttons {
-    visibility: hidden;
-  }
-  
+
   .vocab-card.animating::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: white;
+    top: 2px; /* inset more so the border/outline remains fully visible */
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: rgba(255,255,255,0.6); /* semi-transparent to allow seeing flips */
     z-index: 1;
-    border-radius: 8px;
+    border-radius: 6px;
   }

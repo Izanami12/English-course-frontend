@@ -5,8 +5,8 @@ import VocabularyService from "../service/VocabularyService";
 import TagSelector from "./TagSelector";
 
 const baseTagGroups = {
-  partOfSpeech: ['noun', 'verb', 'adj', 'adverb', 'preposition', 'idiom', 'phrasal verb', 'phrase'],
-  priority: ['zero-priority', 'low-priority', 'mid-priority', 'high-priority', 'top-priority', 'vital']
+  partOfSpeech: ['adj', 'adverb', 'idiom', 'noun', 'phrasal verb', 'phrase', 'preposition', 'verb', 'conjunction', 'determiner', 'interjection', 'numeral', 'participle', 'pronoun'],
+  priority: ['high-priority', 'low-priority', 'mid-priority', 'top-priority', 'vital', 'zero-priority']
 };
 
 const RelationModal = ({
@@ -55,14 +55,36 @@ const RelationModal = ({
 
   const handleTagSelect = (tag) => {
     if (!tag) return;
-    setTags([...tags, { tag }]);
-    setAvailableTags(availableTags.filter(t => t !== tag));
+
+    const isPOS = tagGroups.partOfSpeech.includes(tag);
+    const isPriority = tagGroups.priority.includes(tag);
+
+    let newTags = [...tags];
+
+    if (isPOS) {
+      const existing = newTags.find(t => tagGroups.partOfSpeech.includes(t.tag));
+      if (existing) {
+        setAvailableTags(prev => Array.from(new Set([...prev, existing.tag])));
+        newTags = newTags.filter(t => !tagGroups.partOfSpeech.includes(t.tag));
+      }
+    }
+    if (isPriority) {
+      const existing = newTags.find(t => tagGroups.priority.includes(t.tag));
+      if (existing) {
+        setAvailableTags(prev => Array.from(new Set([...prev, existing.tag])));
+        newTags = newTags.filter(t => !tagGroups.priority.includes(t.tag));
+      }
+    }
+
+    newTags = [...newTags, { tag }];
+    setTags(newTags);
+    setAvailableTags(prev => prev.filter(t => t !== tag));
     setTagSearch("");
   };
 
   const handleTagRemove = (tagToRemove) => {
     setTags(tags.filter(tagObj => tagObj?.tag !== tagToRemove));
-    setAvailableTags([...availableTags, tagToRemove]);
+    setAvailableTags(prev => Array.from(new Set([...prev, tagToRemove])));
   };
 
   const filteredTags = (availableTags || [])
@@ -129,6 +151,7 @@ const RelationModal = ({
             visible={isTagDropdownVisible}
             setVisible={setIsTagDropdownVisible}
           />
+
         </div>
 
         <div className="modal-section">

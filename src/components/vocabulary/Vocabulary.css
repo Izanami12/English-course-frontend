@@ -38,6 +38,43 @@
   background-color: #f0f0f0;
 }
 
+/* Part of speech tags - blue */
+.tag-item.part-of-speech {
+  font-weight: 600;
+  color: #0a66ff;
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+}
+
+/* Priority tags - green */
+.tag-item.priority {
+  font-weight: 600;
+  color: #27ae60;
+  background: #e6ffe6;
+  border: 1px solid #b7eb8f;
+}
+
+/* Word tag pills */
+.tag-text.part-of-speech {
+  font-size: 1.1rem;
+  color: #0a66ff;
+  background-color: #e6f7ff;
+  padding: 4px 14px;
+  border-radius: 8px;
+  border: 1px solid #91d5ff;
+  font-weight: 500;
+}
+
+.tag-text.priority {
+  font-size: 1.1rem;
+  color: #389e3c;
+  background-color: #e6ffe6;
+  padding: 4px 14px;
+  border-radius: 8px;
+  border: 1px solid #b7eb8f;
+  font-weight: 500;
+}
+
 .tag-empty {
   color: #888;
   font-size: 0.9rem;

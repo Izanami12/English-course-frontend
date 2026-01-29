@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Avatar, Spin, Select, Typography } from "antd";
+import { Card, Avatar, Spin, Select, Typography, Button, notification, Modal } from "antd";
 import VocabularyService from "../service/VocabularyService";
 
 const { Title, Paragraph } = Typography;
@@ -9,6 +9,7 @@ const UserInfo = () => {
   const [algorithm, setAlgorithm] = useState({ name: "", description: "" });
   const [availableAlgorithms, setAvailableAlgorithms] = useState({});
   const [loading, setLoading] = useState(true);
+  const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -38,6 +39,31 @@ const UserInfo = () => {
       setLoading(false);
     }
   };
+
+  const handleAddCommon = async () => {
+    Modal.confirm({
+      title: "Подтверждение добавления слов",
+      content: "Вы уверены, что хотите добавить общие слова? Это действие можно выполнить только один раз.",
+      okText: "Подтвердить",
+      cancelText: "Отмена",
+      onOk: async () => {
+        setAdding(true);
+        try {
+          const res = await VocabularyService.addCommonInputsToUser();
+          const msg = res?.data?.data || "Common inputs successfully added";
+          notification.success({ message: "Добавление слов", description: msg });
+          // Обновляем данные пользователя после добавления слов
+          const userRes = await VocabularyService.getUserInfo();
+          setUser(userRes.data.data);
+        } catch (e) {
+          const errMsg = e?.response?.data?.message || e.message || "Server error";
+          notification.error({ message: "Ошибка", description: errMsg });
+        } finally {
+          setAdding(false);
+        }
+      }
+    });
+  }; 
 
   if (loading) return <Spin />;
 
@@ -69,6 +95,15 @@ const UserInfo = () => {
         <Paragraph style={{ marginTop: 12, color: "#555" }}>
           <b>Description:</b> {algorithm.description}
         </Paragraph>
+        <Button 
+          type="primary" 
+          style={{ marginTop: 12 }} 
+          loading={adding} 
+          onClick={handleAddCommon}
+          disabled={user?.userProperties?.commonsInitiated === true}
+        >
+          Добавить общие слова
+        </Button>
       </div>
     </Card>
   );

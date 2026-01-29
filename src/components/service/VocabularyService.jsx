@@ -1,8 +1,8 @@
 import axiosInstance from "../../CustomAxios";
 
 class VocabularyService {
-    getVocabularyList() {
-        return axiosInstance.get('/vocabulary');
+    getVocabularyList(params = {}) {
+        return axiosInstance.get('/vocabulary', { params });
     }
 
     getUserTags() {
@@ -17,9 +17,8 @@ class VocabularyService {
         return axiosInstance.get(`/vocabulary/${id}`);
     }
 
-    // Добавляем новый метод для поиска
-    searchVocabulary(searchParams) {
-        return axiosInstance.get('/vocabulary/search', { params: searchParams });
+    searchVocabulary(searchParams, pagingParams = {}) {
+        return axiosInstance.post('/vocabulary/search', searchParams, { params: pagingParams });
     }
 
     getUserInfo() {
@@ -32,6 +31,10 @@ class VocabularyService {
 
     setAlgorithm(algorithm) {
         return axiosInstance.put(`/weight-algorithm/${algorithm}`);
+    }
+
+    addCommonInputsToUser() {
+        return axiosInstance.post('/vocabulary/common');
     }
 
     updateInput(inputData) {

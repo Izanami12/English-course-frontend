@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Tag, Button, Spin, Space, Typography, message } from "antd";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import VocabularyService from "../service/VocabularyService";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import "./Input.css";
@@ -8,9 +8,16 @@ import EditInputModal from "./EditInputModal";
 
 const { Title, Paragraph } = Typography;
 
+// Tag groups for styling
+const baseTagGroups = {
+  partOfSpeech: ['adj', 'adverb', 'idiom', 'noun', 'phrasal verb', 'phrase', 'preposition', 'verb', 'conjunction', 'determiner', 'interjection', 'numeral', 'participle', 'pronoun'],
+  priority: ['high-priority', 'low-priority', 'mid-priority', 'top-priority', 'vital', 'zero-priority']
+};
+
 const Input = ({ inputId: propInputId }) => {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const inputId = propInputId || Number(params.id);
 
   const [loading, setLoading] = useState(true);
@@ -49,12 +56,23 @@ const Input = ({ inputId: propInputId }) => {
 
   return (
     <div className="input-page-wrapper">
-      <div className="input-back-btn-fixed" onClick={() => navigate("/vocabulary")}>
+      <div className="input-back-btn-fixed" onClick={() => { if (location.state && location.state.from) { navigate(location.state.from); } else { navigate(-1); } }}>
         <ArrowLeftOutlined style={{ fontSize: 28, color: "#1890ff", cursor: "pointer" }} />
       </div>
       <Card style={{ maxWidth: 600, margin: "32px auto", fontSize: "20px" }} className="input-card">
         <Title level={2} style={{ fontSize: "2.2rem", marginBottom: 8 }}>{inputObj.input}</Title>
-        <Button type="default" style={{ marginBottom: 16 }} onClick={() => setIsEditModalOpen(true)}>
+        {inputObj.transcription && (
+          <Paragraph style={{ fontSize: "1.1rem", color: "#888", marginBottom: 8 }}>
+            [{inputObj.transcription}]
+          </Paragraph>
+        )}
+        <Button
+          type="default"
+          style={{ marginBottom: 16 }}
+          onClick={() => setIsEditModalOpen(true)}
+          disabled={inputObj.inputType !== "PERSONAL"}
+          title={inputObj.inputType !== "PERSONAL" ? "Данное слово нельзя редактировать" : ""}
+        >
           Edit
         </Button>
         <Paragraph style={{ fontSize: "1.3rem", marginBottom: 8 }}>
@@ -63,9 +81,11 @@ const Input = ({ inputId: propInputId }) => {
         <Paragraph style={{ fontSize: "1.1rem", marginBottom: 8 }}>
           <b>Tags:</b>
           <div className="input-tags-block">
-            {inputObj.tags?.map((tagObj) => (
-              <Tag key={tagObj.tag} color="green" className="input-tag">{tagObj.tag}</Tag>
-            ))}
+            {inputObj.tags?.map((tagObj) => {
+              const t = (tagObj.tag || '').toLowerCase();
+              const cls = baseTagGroups.partOfSpeech.includes(t) ? 'input-tag-blue' : baseTagGroups.priority.includes(t) ? 'input-tag' : 'input-tag';
+              return <Tag key={tagObj.tag} className={cls}>{tagObj.tag}</Tag>;
+            })}
           </div>
         </Paragraph>
         <Paragraph style={{ fontSize: "1.1rem", marginBottom: 8 }}>
@@ -87,15 +107,17 @@ const Input = ({ inputId: propInputId }) => {
                   <Button
                     key={rel.id}
                     type="link"
-                    onClick={() => navigate(`/vocabulary/input/${rel.id}`)}
+                    onClick={() => navigate(`/vocabulary/input/${rel.id}`, { state: { from: location.state?.from || '/vocabulary' } })}
                     className="input-relation-btn"
                     style={{ padding: 0, fontSize: "1.1rem" }}
                   >
                     <span className="input-relation-text">{rel.input} — {rel.translate}</span>
                     <Space size="small" style={{ marginLeft: 8 }}>
-                      {rel.tags?.map((tagObj) => (
-                        <Tag key={tagObj.tag} className="input-tag-blue">{tagObj.tag}</Tag>
-                      ))}
+                      {rel.tags?.map((tagObj) => {
+                        const t = (tagObj.tag || '').toLowerCase();
+                        const cls = baseTagGroups.partOfSpeech.includes(t) ? 'input-tag-blue' : baseTagGroups.priority.includes(t) ? 'input-tag' : 'input-tag';
+                        return <Tag key={tagObj.tag} className={cls}>{tagObj.tag}</Tag>;
+                      })}
                     </Space>
                   </Button>
                 ))}

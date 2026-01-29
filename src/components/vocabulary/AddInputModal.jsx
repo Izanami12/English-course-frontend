@@ -6,8 +6,8 @@ import VocabularyService from "../service/VocabularyService";
 import TagSelector from "./TagSelector";
 
 const baseTagGroups = {
-  partOfSpeech: ['noun', 'verb', 'adj', 'adverb', 'preposition', 'idiom', 'phrasal verb', 'phrase'],
-  priority: ['zero-priority', 'low-priority', 'mid-priority', 'high-priority', 'top-priority', 'vital']
+  partOfSpeech: ['adj', 'adverb', 'idiom', 'noun', 'phrasal verb', 'phrase', 'preposition', 'verb', 'conjunction', 'determiner', 'interjection', 'numeral', 'participle', 'pronoun'],
+  priority: ['high-priority', 'low-priority', 'mid-priority', 'top-priority', 'vital', 'zero-priority']
 };
 
 const AddInputModal = ({ isOpen, onClose, onSubmit }) => {
@@ -89,12 +89,37 @@ const AddInputModal = ({ isOpen, onClose, onSubmit }) => {
     };
   };
 
-  // Обработчики тегов
+  // Обработчики тегов (ограничение: только один тег в каждой группе partOfSpeech и priority)
   const handleTagSelect = (tag) => {
     if (!tag) return;
-    const newTags = [...tags, { tag }];
+
+    const isPOS = tagGroups.partOfSpeech.includes(tag);
+    const isPriority = tagGroups.priority.includes(tag);
+
+    let newTags = [...tags];
+
+    // If selecting a part-of-speech tag, replace existing one
+    if (isPOS) {
+      const existing = newTags.find(t => tagGroups.partOfSpeech.includes(t.tag));
+      if (existing) {
+        // restore previously selected tag back into available tags
+        setAvailableTags(prev => Array.from(new Set([...prev, existing.tag])));
+        newTags = newTags.filter(t => !tagGroups.partOfSpeech.includes(t.tag));
+      }
+    }
+
+    // If selecting a priority tag, replace existing one
+    if (isPriority) {
+      const existing = newTags.find(t => tagGroups.priority.includes(t.tag));
+      if (existing) {
+        setAvailableTags(prev => Array.from(new Set([...prev, existing.tag])));
+        newTags = newTags.filter(t => !tagGroups.priority.includes(t.tag));
+      }
+    }
+
+    newTags = [...newTags, { tag }];
     setTags(newTags);
-    setAvailableTags(availableTags.filter(t => t !== tag));
+    setAvailableTags(prev => prev.filter(t => t !== tag));
     setTagSearch("");
     setValidation(validateTags(newTags));
   };
@@ -102,7 +127,7 @@ const AddInputModal = ({ isOpen, onClose, onSubmit }) => {
   const handleTagRemove = (tagToRemove) => {
     const newTags = tags.filter(tagObj => tagObj?.tag !== tagToRemove);
     setTags(newTags);
-    setAvailableTags([...availableTags, tagToRemove]);
+    setAvailableTags(prev => Array.from(new Set([...prev, tagToRemove])));
     setValidation(validateTags(newTags));
   };
 
@@ -238,6 +263,7 @@ const AddInputModal = ({ isOpen, onClose, onSubmit }) => {
                   visible={isTagDropdownVisible}
                   setVisible={setIsTagDropdownVisible}
                 />
+
                 {!validation.partOfSpeech && tagGroups.partOfSpeech.length > 0 && (
                   <Alert message="Please select at least one part of speech" type="error" showIcon />
                 )}
@@ -298,7 +324,7 @@ const AddInputModal = ({ isOpen, onClose, onSubmit }) => {
         isOpen={isRelationModalVisible}
         onCancel={() => setIsRelationModalVisible(false)}
         onAdd={handleAddRelation}
-        allTags={availableTags}
+        allTags={Array.from(new Set([...availableTags, ...tags.map(t => t.tag)]))}
         tagGroups={tagGroups}
       />
     </>

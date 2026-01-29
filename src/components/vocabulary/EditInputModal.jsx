@@ -6,8 +6,8 @@ import "./AddInputModal.css";
 import VocabularyService from "../service/VocabularyService";
 
 const baseTagGroups = {
-  partOfSpeech: ['noun', 'verb', 'adj', 'adverb', 'preposition', 'idiom', 'phrasal verb', 'phrase'],
-  priority: ['zero-priority', 'low-priority', 'mid-priority', 'high-priority', 'top-priority', 'vital']
+  partOfSpeech: ['adj', 'adverb', 'idiom', 'noun', 'phrasal verb', 'phrase', 'preposition', 'verb', 'conjunction', 'determiner', 'interjection', 'numeral', 'participle', 'pronoun'],
+  priority: ['high-priority', 'low-priority', 'mid-priority', 'top-priority', 'vital', 'zero-priority']
 };
 
 const EditInputModal = ({ isOpen, onClose, onSubmit, initialData }) => {
@@ -104,13 +104,28 @@ const EditInputModal = ({ isOpen, onClose, onSubmit, initialData }) => {
     };
   };
 
-  // Обработчики тегов
+  // Обработчики тегов (замена уже выбранного тега в группе)
   const handleTagAdd = (tag) => {
-    if (!tags.some(t => t.tag === tag)) {
-      const newTags = [...tags, { tag }];
+    if (!tag) return;
+    const isPOS = tagGroups.partOfSpeech.includes(tag);
+    const isPriority = tagGroups.priority.includes(tag);
+
+    let newTags = [...tags];
+
+    if (isPOS) {
+      newTags = newTags.filter(t => !tagGroups.partOfSpeech.includes(t.tag));
+    }
+    if (isPriority) {
+      newTags = newTags.filter(t => !tagGroups.priority.includes(t.tag));
+    }
+
+    // only add if not already present
+    if (!newTags.some(t => t.tag === tag)) {
+      newTags = [...newTags, { tag }];
       setTags(newTags);
       setValidation(validateTags(newTags));
     }
+
     setTagSearch("");
     setIsTagDropdownVisible(false);
   };
@@ -188,7 +203,9 @@ const EditInputModal = ({ isOpen, onClose, onSubmit, initialData }) => {
           tags: rel.tags
         }))
       };
-
+      if (initialData.transcription) {
+        inputData.transcription = initialData.transcription;
+      }
       await onSubmit(inputData);
       onClose();
     } catch (error) {
@@ -250,16 +267,19 @@ const EditInputModal = ({ isOpen, onClose, onSubmit, initialData }) => {
             <div className="field-group">
               <b>Tags:</b>
               <TagSelector
-                tags={tags}
+                value={tags}
                 availableTags={availableTags}
                 tagGroups={tagGroups}
-                onTagAdd={handleTagAdd}
+                search={tagSearch}
+                onSearchChange={setTagSearch}
+                onTagSelect={handleTagAdd}
                 onTagRemove={handleTagRemove}
-                tagSearch={tagSearch}
-                setTagSearch={setTagSearch}
-                isDropdownVisible={isTagDropdownVisible}
-                setDropdownVisible={setIsTagDropdownVisible}
+                onFocus={() => setIsTagDropdownVisible(true)}
+                visible={isTagDropdownVisible}
+                setVisible={setIsTagDropdownVisible}
               />
+
+
               {!validation.isValid && (
                 <Alert
                   type="warning"
@@ -307,7 +327,7 @@ const EditInputModal = ({ isOpen, onClose, onSubmit, initialData }) => {
         isOpen={isRelationModalVisible}
         onCancel={() => { setIsRelationModalVisible(false); setEditingRelationIndex(null); }}
         onAdd={handleAddRelation}
-        allTags={availableTags}
+        allTags={Array.from(new Set([...availableTags, ...tags.map(t => t.tag)]))}
         tagGroups={tagGroups}
         initialData={relationModalInitialData}
       />

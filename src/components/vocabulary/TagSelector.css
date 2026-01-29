@@ -3,18 +3,33 @@
   width: 100%;
 }
 
+/* Always visible selected tags (pills) */
+.selected-tags-panel-always {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 8px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
 .dropdown-panel {
   position: absolute;
-  top: 40px;
+  top: 48px;
   left: 0;
   width: 100%;
   background: #fff;
   border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 16px;
+  border-radius: 8px;
+  padding: 12px;
   z-index: 1000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  gap: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  gap: 12px;
 }
 
 .tag-list {
@@ -23,32 +38,33 @@
 }
 
 .tag-item {
-  padding: 6px 8px;
+  padding: 8px 10px;
   cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.2s;
-  margin-bottom: 2px;
+  border-radius: 16px;
+  transition: background 0.12s;
+  margin-bottom: 6px;
+  display: inline-block;
 }
 
 .tag-item:hover {
-  background-color: #f0f0f0;
+  background-color: #f5f5f7;
 }
 
 .tag-item.part-of-speech {
-  font-weight: bold;
-  color: #1890ff;
+  font-weight: 600;
+  color: #0a66ff;
 }
 
 .tag-item.priority {
-  font-weight: bold;
-  color: #52c41a;
+  font-weight: 600;
+  color: #27ae60;
 }
 
 .tag-item.custom {
-  color: #666;
+  color: #444;
 }
 
-.tag-empty {
+.tag-empty, .tag-empty.inline {
   color: #888;
   font-size: 0.9rem;
   padding: 8px 0;
@@ -60,3 +76,4 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+

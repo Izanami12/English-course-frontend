@@ -9,37 +9,31 @@
   font-family: 'Excalifont', sans-serif !important;
 }
 
+.add-input-modal .ant-modal-content {
+  border-radius: 12px;
+  padding: 18px;
+}
+
 .modal-content {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .main-fields {
-  flex: 2;
+  width: 100%;
 }
 
 .additional-fields {
-  flex: 1;
+  width: 100%;
 }
 
 .field-group {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .tag-selector {
   position: relative;
-}
-
-.tag-dropdown {
-  position: absolute;
-  background: white;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .tag-option {
@@ -88,4 +82,10 @@
   margin-top: 16px;
   padding-top: 16px;
   border-top: 1px solid #f0f0f0;
+}
+
+/* Make Save button a bit larger and rounded to match mock */
+.modal-footer .ant-btn-primary {
+  border-radius: 20px;
+  padding: 6px 22px;
 }

@@ -26,7 +26,7 @@ const TagSelector = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [visible, setVisible]);
-
+  const getTagText = (tagObj) => (typeof tagObj === 'string' ? tagObj : tagObj?.tag);
   const filteredTags = (availableTags || [])
     .filter(tag => tag && tag.toLowerCase().includes((search || '').toLowerCase()))
     .sort((a, b) => {
@@ -47,6 +47,31 @@ const TagSelector = ({
         placeholder="Search..."
         className="mb-2"
       />
+
+      {/* Selected tags panel (shows only when some tags are selected) */}
+      {value && value.length > 0 && (
+        <div className="selected-tags-panel-always">
+          <Space wrap>
+            {value.map(tagObj => {
+              const t = getTagText(tagObj);
+              return (
+                <Tag
+                  key={t}
+                  closable
+                  onClose={() => onTagRemove(t)}
+                  color={
+                    tagGroups.partOfSpeech.includes(t) ? 'blue' :
+                      tagGroups.priority.includes(t) ? 'green' : 'default'
+                  }
+                >
+                  {t}
+                </Tag>
+              );
+            })}
+          </Space>
+        </div>
+      )}
+
       {visible && (
         <div className="dropdown-panel">
           <div className="tag-list">
@@ -66,23 +91,28 @@ const TagSelector = ({
               <div className="tag-empty">No tags found</div>
             )}
           </div>
-          <div className="selected-tags-panel mt-2">
-            <Space wrap>
-              {value.map(tagObj => (
-                <Tag
-                  key={tagObj.tag}
-                  closable
-                  onClose={() => onTagRemove(tagObj.tag)}
-                  color={
-                    tagGroups.partOfSpeech.includes(tagObj.tag) ? 'blue' :
-                      tagGroups.priority.includes(tagObj.tag) ? 'green' : 'default'
-                  }
-                >
-                  {tagObj.tag}
-                </Tag>
-              ))}
-            </Space>
-          </div>
+
+          {/* Also show currently selected tags inside the dropdown for better visibility */}
+          {value && value.length > 0 && (
+            <div className="selected-tags-panel-dropdown">
+              <div className="selected-title">Selected:</div>
+              <Space wrap>
+                {value.map(tagObj => {
+                  const t = getTagText(tagObj);
+                  return (
+                    <Tag
+                      key={`sel-${t}`}
+                      closable
+                      onClose={() => onTagRemove(t)}
+                      color={tagGroups.partOfSpeech.includes(t) ? 'blue' : tagGroups.priority.includes(t) ? 'green' : 'default'}
+                    >
+                      {t}
+                    </Tag>
+                  );
+                })}
+              </Space>
+            </div>
+          )}
         </div>
       )}
     </div>
