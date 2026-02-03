@@ -9,6 +9,29 @@ import keycloak from "../../keycloak";
 
 const SOCKET_URL = "http://localhost:8080/ws-memorization";
 
+const baseTagGroups = {
+  partOfSpeech: ['adj', 'adverb', 'idiom', 'noun', 'phrasal verb', 'phrase', 'preposition', 'verb', 'conjunction', 'determiner', 'interjection', 'numeral', 'participle', 'pronoun'],
+  priority: ['high-priority', 'low-priority', 'mid-priority', 'top-priority', 'vital', 'zero-priority']
+};
+
+const tagStyles = {
+  partOfSpeech: {
+    background: "#e6f7ff",
+    color: "#1890ff",
+    border: "1px solid #91d5ff"
+  },
+  priority: {
+    background: "#e6ffe6",
+    color: "#389e3c",
+    border: "1px solid #b7eb8f"
+  },
+  default: {
+    background: "#f5f5f5",
+    color: "#666",
+    border: "1px solid #d9d9d9"
+  }
+};
+
 const VocabularyLearningCard = () => {
   const [input, setInput] = useState(null);
   const [prev, setPrev] = useState(null); // store previous word for answer animation
@@ -289,24 +312,28 @@ const VocabularyLearningCard = () => {
                   </div>
                   <div style={{ margin: "6px 0" }} className="tags-wrapper">
                     {(prev ? prev.tags : input.tags)?.length > 0 ? (
-                      (prev ? prev.tags : input.tags).map((tagObj) => (
-                        <span
-                          key={tagObj.tag}
-                          style={{
-                            background: "#e6ffe6",
-                            color: "#389e3c",
-                            borderRadius: 8,
-                            padding: "2px 12px",
-                            marginRight: 8,
-                            fontWeight: 500,
-                            fontSize: "1.1rem",
-                            border: "1px solid #b7eb8f",
-                            display: "inline-block",
-                          }}
-                        >
-                          {tagObj.tag}
-                        </span>
-                      ))
+                      (prev ? prev.tags : input.tags).map((tagObj) => {
+                        const tag = tagObj.tag;
+                        const isPartOfSpeech = baseTagGroups.partOfSpeech.includes(tag);
+                        const isPriority = baseTagGroups.priority.includes(tag);
+                        const style = isPartOfSpeech ? tagStyles.partOfSpeech : isPriority ? tagStyles.priority : tagStyles.default;
+                        return (
+                          <span
+                            key={tagObj.tag}
+                            style={{
+                              ...style,
+                              borderRadius: 8,
+                              padding: "2px 12px",
+                              marginRight: 8,
+                              fontWeight: 500,
+                              fontSize: "1.1rem",
+                              display: "inline-block",
+                            }}
+                          >
+                            {tagObj.tag}
+                          </span>
+                        );
+                      })
                     ) : (
                       <span style={{ color: "#888" }}>No tags</span>
                     )}

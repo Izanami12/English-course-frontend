@@ -9,6 +9,7 @@ const UserInfo = () => {
   const [algorithm, setAlgorithm] = useState({ name: "", description: "" });
   const [availableAlgorithms, setAvailableAlgorithms] = useState({});
   const [loading, setLoading] = useState(true);
+  const [algorithmLoading, setAlgorithmLoading] = useState(false);
   const [adding, setAdding] = useState(false);
 
   useEffect(() => {
@@ -31,12 +32,19 @@ const UserInfo = () => {
   }, []);
 
   const handleAlgorithmChange = async (value) => {
-    setLoading(true);
+    setAlgorithmLoading(true);
     try {
       const res = await VocabularyService.setAlgorithm(value);
       setAlgorithm(res.data.data.currentAlgorithm);
+      notification.success({
+        message: "Алгоритм изменен",
+        description: `Алгоритм обучения изменен на: ${res.data.data.currentAlgorithm.name}`
+      });
+    } catch (e) {
+      const errMsg = e?.response?.data?.message || e.message || "Ошибка при изменении алгоритма";
+      notification.error({ message: "Ошибка", description: errMsg });
     } finally {
-      setLoading(false);
+      setAlgorithmLoading(false);
     }
   };
 
@@ -85,6 +93,8 @@ const UserInfo = () => {
           style={{ width: "100%", marginTop: 8 }}
           value={algorithm.name}
           onChange={handleAlgorithmChange}
+          disabled={algorithmLoading}
+          loading={algorithmLoading}
         >
           {availableAlgorithms.map(algo => (
             <Select.Option key={algo.name} value={algo.name}>
