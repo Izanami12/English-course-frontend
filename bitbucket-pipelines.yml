@@ -1,0 +1,21 @@
+image: docker:24.0.5
+
+pipelines:
+  branches:
+    '**':
+      - step:
+          name: Build & Push frontend image
+          services:
+            - docker
+          script:
+            - echo "Disable BuildKit"
+            - export DOCKER_BUILDKIT=0
+
+            - echo "Login to Docker Hub"
+            - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+            - echo "Build Docker image"
+            - docker build -t $DOCKER_REPO:$BITBUCKET_COMMIT .
+
+            - echo "Push image"
+            - docker push $DOCKER_REPO:$BITBUCKET_COMMIT
