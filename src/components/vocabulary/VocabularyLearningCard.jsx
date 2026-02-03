@@ -49,7 +49,6 @@ const VocabularyLearningCard = () => {
   const animationTimersRef = useRef({ mid: null, end: null });
   const [waitingNext, setWaitingNext] = useState(false);
 
-  // Update inputRef whenever input changes
   useEffect(() => {
     inputRef.current = input;
   }, [input]);
