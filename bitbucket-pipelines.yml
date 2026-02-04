@@ -1,19 +1,25 @@
-image: docker:20.10.24
+image: node:20-alpine
 
 pipelines:
   branches:
     main:
       - step:
-          name: Build & Push frontend image
+          name: Build frontend
           size: 2x
-          services:
-            - docker
+          caches:
+            - node
           script:
+            - echo "Install dependencies"
+            - npm ci
+
+            - echo "Build frontend"
+            - npm run build
+
             - echo "Login to Docker Hub"
             - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-            - echo "Build Docker image"
+            - echo "Build lightweight Docker image"
             - docker build -t $DOCKER_REPO:$BITBUCKET_COMMIT .
 
-            - echo "Push image"
+            - echo "Push Docker image"
             - docker push $DOCKER_REPO:$BITBUCKET_COMMIT
