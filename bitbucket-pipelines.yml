@@ -24,6 +24,7 @@ pipelines:
             - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
             - echo "Build lightweight Docker image"
+            - export DOCKER_BUILDKIT=0
             - docker build -t $DOCKER_REPO:$BITBUCKET_COMMIT .
 
             - echo "Push Docker image"
