@@ -1,4 +1,4 @@
-image: node:20-alpine
+image: docker:24.0.5
 
 pipelines:
   branches:
@@ -6,9 +6,14 @@ pipelines:
       - step:
           name: Build frontend
           size: 2x
+          services:
+            - docker
           caches:
             - node
           script:
+            - echo "Install Node.js"
+            - apk add --no-cache nodejs npm
+
             - echo "Install dependencies"
             - npm ci
 
