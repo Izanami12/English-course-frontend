@@ -5,6 +5,7 @@ pipelines:
     main:
       - step:
           name: Build & Push frontend image
+          size: 2x
           services:
             - docker
           script:
