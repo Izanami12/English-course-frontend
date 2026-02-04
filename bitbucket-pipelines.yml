@@ -4,7 +4,7 @@ pipelines:
   branches:
     main:
       - step:
-          name: Build frontend
+          name: Build & Push frontend image
           size: 2x
           services:
             - docker
@@ -23,7 +23,7 @@ pipelines:
             - echo "Login to Docker Hub"
             - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-            - echo "Build lightweight Docker image"
+            - echo "Build Docker image (legacy builder)"
             - export DOCKER_BUILDKIT=0
             - docker build -t $DOCKER_REPO:$BITBUCKET_COMMIT .
 
