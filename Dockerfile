@@ -1,24 +1,13 @@
-# Stage 1: build frontend
-FROM node:20-alpine AS build
-
-WORKDIR /app
-
-# Увеличиваем память Node.js для сборки
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-
-# Копируем package.json и package-lock.json для кэширования npm ci
-COPY package*.json ./
-RUN npm ci
-
-# Копируем исходники и билдим фронт
-COPY . .
-RUN npm run build
-
-# Stage 2: lightweight image с артефактами
+# Минимальный образ, без Node, без npm
 FROM alpine:3.19
 
+# Куда складываем результат сборки
 WORKDIR /dist
-COPY --from=build /app/dist .
 
-# Этот контейнер сам ничего не запускает, просто хранит сборку
-CMD ["sh", "-c", "echo Frontend build container"]
+# Копируем УЖЕ собранный фронт из pipeline
+# (npm run build уже был выполнен)
+COPY dist/ .
+
+# Контейнер ничего не запускает
+# Он просто хранит артефакты сборки
+CMD ["sh", "-c", "echo Frontend artifacts image ready"]

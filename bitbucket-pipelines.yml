@@ -1,19 +1,16 @@
-image: docker:24.0.5
+image: node:20-alpine
 
 pipelines:
   branches:
     main:
       - step:
-          name: Build & Push frontend image
+          name: Build frontend & push Docker image
           size: 2x
           services:
             - docker
           caches:
             - node
           script:
-            - echo "Install Node.js"
-            - apk add --no-cache nodejs npm
-
             - echo "Install dependencies"
             - npm ci
 
@@ -23,8 +20,7 @@ pipelines:
             - echo "Login to Docker Hub"
             - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-            - echo "Build Docker image (legacy builder)"
-            - export DOCKER_BUILDKIT=0
+            - echo "Build Docker image (artifacts only)"
             - docker build -t $DOCKER_REPO:$BITBUCKET_COMMIT .
 
             - echo "Push Docker image"
