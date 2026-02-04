@@ -9,9 +9,6 @@ pipelines:
           services:
             - docker
           script:
-            - echo "Disable BuildKit"
-            - export DOCKER_BUILDKIT=0
-
             - echo "Login to Docker Hub"
             - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
