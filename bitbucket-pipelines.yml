@@ -9,6 +9,9 @@ pipelines:
           services:
             - docker
           script:
+            - echo "Disable buildx (NOT BuildKit)"
+            - export DOCKER_BUILDX=0
+
             - echo "Login to Docker Hub"
             - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
