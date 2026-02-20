@@ -1,10 +1,10 @@
 import Keycloak from 'keycloak-js';
 
-// Initialize Keycloak instance with Keycloak server settings
+// Initialize Keycloak instance with environment variables
 const keycloak = new Keycloak({
-  url: 'http://localhost:8180/',        // Keycloak server URL
-  realm: 'english-course',                     // The realm created in Keycloak
-  clientId: 'english-course-frontend',          // The client ID for the frontend app
+  url: import.meta.env.VITE_KEYCLOAK_URL || 'http://localhost:8180',
+  realm: import.meta.env.VITE_KEYCLOAK_REALM || 'english-course',
+  clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID || 'english-course-frontend',
 });
 
 export default keycloak;

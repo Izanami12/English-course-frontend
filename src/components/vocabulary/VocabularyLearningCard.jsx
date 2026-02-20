@@ -6,8 +6,7 @@ import SockJS from "sockjs-client";
 import { useNavigate } from "react-router-dom";
 import "./VocabularyLearningCard.css";
 import keycloak from "../../keycloak";
-
-const SOCKET_URL = "http://localhost:8080/ws-memorization";
+import {WS_URL} from "../../config/ws.jsx";
 
 const baseTagGroups = {
   partOfSpeech: ['adj', 'adverb', 'idiom', 'noun', 'phrasal verb', 'phrase', 'preposition', 'verb', 'conjunction', 'determiner', 'interjection', 'numeral', 'participle', 'pronoun'],
@@ -62,7 +61,7 @@ const VocabularyLearningCard = () => {
     const connectWebSocket = async () => {
       try {
         await keycloak.updateToken(30);
-        const socket = new SockJS(`${SOCKET_URL}?access_token=${keycloak.token}`);
+        const socket = new SockJS(`${WS_URL}?access_token=${keycloak.token}`);
         stompClient.current = Stomp.over(socket);
 
         // Включение отладки
